@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Alamin!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* --- CORE VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-football: #00ff88; /* Neon Green */
+            --accent-study: #00ccff; /* Neon Blue */
+            --accent-gold: #ffd700;
+            --font-heading: 'Helvetica Neue', sans-serif;
+            --font-body: 'Georgia', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-heading);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 { font-weight: 800; letter-spacing: -1px; }
+        p { font-family: var(--font-body); color: var(--text-muted); }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent-football), var(--accent-study));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* For animation */
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; height: 100vh; }
+        .hero h1 { font-size: 5rem; line-height: 1; margin-bottom: 1rem; }
+        .hero .subtitle { 
+            font-size: 1.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+        }
+        .scroll-down { margin-top: 3rem; animation: bounce 2s infinite; font-size: 2rem; }
+
+        /* --- DUALITY SECTION (Cards) --- */
+        .duality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover { transform: translateY(-10px); }
+        .card-football:hover { box-shadow: 0 0 30px rgba(0, 255, 136, 0.2); border-color: var(--accent-football); }
+        .card-study:hover { box-shadow: 0 0 30px rgba(0, 204, 255, 0.2); border-color: var(--accent-study); }
+
+        .card-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .card h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .quote { font-style: italic; font-size: 1.1rem; border-left: 3px solid; padding-left: 1rem; margin-top: 1.5rem; }
+        .q-football { border-color: var(--accent-football); }
+        .q-study { border-color: var(--accent-study); }
+
+        /* --- PHOTO GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+        
+        .photo-frame {
+            height: 350px;
+            background-color: #222;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: grayscale(80%);
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        /* --- THE WISH --- */
+        .wish-content {
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 4rem;
+            border-radius: 30px;
+            border: 1px solid #333;
+            max-width: 800px;
+        }
+
+        .wish-text {
+            font-size: 1.4rem;
+            color: #ddd;
+            margin-bottom: 2rem;
+            font-family: var(--font-body);
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-top: 2rem;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .duality-grid { grid-template-columns: 1fr; }
+            .card { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero visible">
+        <div class="container">
+            <p class="subtitle">The Striker & The Scholar</p>
+            <h1>Happy Birthday<br><span class="gradient-text">ALAMIN</span></h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem;">⚽ Baller on the field. 🧠 Genius in the classroom.</p>
+            <div class="scroll-down">👇</div>
+        </div>
+    </section>
+
+    <section id="duality">
+        <div class="container">
+            <div class="duality-grid">
+                <div class="card card-football">
+                    <div class="card-icon">⚽</div>
+                    <h2>The Athlete</h2>
+                    <p>Speed, precision, and the heart of a champion. When you're on the pitch, the game changes.</p>
+                    <div class="quote q-football">
+                        "Talent wins games, but teamwork and intelligence win championships." <br>— Michael Jordan
+                    </div>
+                </div>
+
+                <div class="card card-study">
+                    <div class="card-icon">📚</div>
+                    <h2>The Intellectual</h2>
+                    <p>Focus, dedication, and a sharp mind. Calculating velocity in Physics, then executing it on the turf.</p>
+                    <div class="quote q-study">
+                        "The roots of education are bitter, but the fruit is sweet." <br>— Aristotle
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="memories">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 3rem;">Highlights 📸</h2>
+            <div class="gallery-grid">
+                <div class="photo-frame">
+                    <img src="https://alamin1.jpg" alt="Alamin">
+                </div>
+                <div class="photo-frame">
+                    <img src="https://https://alamin2.jpg" alt="Alamin">
+                </div>
+                <div class="photo-frame">
+                    <img src="https://https://alamin3.jpg" alt="Alamin">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="wish">
+        <div class="container" style="display: flex; justify-content: center;">
+            <div class="wish-content">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">To The Legend 🏆</h2>
+                <div class="wish-text">
+                    "🎂Happy Birthday,🎂 Alamin!"<br><br>
+                    "It is rare to find someone who dominates the game with their feet and dominates the grades with their mind. You are the perfect definition of <strong>balance</strong>."<br><br>
+                    "May your year be full of top-corner goals, A+ grades, and moments that turn into lifelong memories. Keep dribbling through life's challenges and scoring big!"
+                </div>
+                <button onclick="fireConfetti()" style="padding: 1rem 2rem; border-radius: 50px; background: white; color: black; border: none; font-weight: bold; cursor: pointer; font-size: 1rem;">
+                    Celebrate Again 🎊
+                </button>
+                <div class="signature">
+                    With love, from Sus ❤️‍🩹🫂✨.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 2rem; color: #444; font-size: 0.8rem;">
+        Made for Alamin's Special Day from @cramitzy 
+    </footer>
+
+    <script>
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // Confetti Function
+        function fireConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var random = function(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 50 * (timeLeft / duration);
+              // since particles fall down, start a bit higher than random
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Fire on load
+        window.onload = fireConfetti;
+    </script>
+</body>
+</html>
